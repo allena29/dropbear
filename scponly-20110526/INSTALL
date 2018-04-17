@@ -1,0 +1,176 @@
+scponly Installation Instructions:
+
+http://sublimation.org/scponly
+joe@sublimation.org
+
+Installing scponly is not difficult.  It is not trivial either so I
+advise reading the instructions carefully.  Keep in mind, you CAN
+use scponly as a setuid binary, which should warrant caution.
+
+
+Step 1.  Decide if you want to use chroot() functionality.  
+
+	If you dont know what this step means, consult "man chroot".  
+	If you still dont understand this question, you should not
+	use chroot() functionality.  Go to step 2.  
+
+	Otherwise, consider the following:
+  - If you do use chroot(), your binary will need to be setuid. This
+	should make any security conscious administrator wary.
+  - Also consider that scponly will only execute AFTER sshd has
+	authenticated the remote user.  Given this, you should be
+	able to rest a little easier knowing that utilizing scponly
+	will not open you up to impersonal vulnerability subnet scans.
+  - If you are still unsure, read the code.  There is a seteuid
+	that ensures that the execution of any commands is
+	never done with an effective uid of 0.
+  - scponly will check the permissions of the directory it is 
+    about to chroot into unless --disable-chroot-checkdir is used
+    at confiuration time.  This is to prevent chroot-ing into a
+    user writable directory.
+  - Lastly, I make no guarantees that this code is unexploitable.  
+	Any system administrator utilizing scponly bears the full
+	responsibility for maintaining a secure system. (see 18/08/02
+	CHANGELOG!)
+  - Without chroot() functionality, scponly still functions just
+	fine.  However, most all files on any root filesystem for any
+	default installation are globally readable.
+  - installing scponly with chroot could incur some pretty hairy
+	troubleshooting.  The binaries and libraries must be set
+	up properly in the chroot subdirectories properly.
+	
+
+Step 2.  Configure your installation.
+
+	There are only a handful of options to configure scponly.
+	Some to note:
+
+	--enable-chrooted-binary
+
+	This option configures additional compile and install parameters
+	that will set your scponly installation to handle chrooted scponly
+	users.  By default, chrooted scponly binaries are not built.
+
+	--disable-wildcards
+
+	The wildcard processing is new and although I know of no
+	vulnerabilities, the especially paranoid may wish to disable
+	this feature.  Also note, it only relates to "scp" transfers,
+	and not "sftp", which handles its own wildcards.  By default,
+	wildcards are enabled.
+
+	--disable-scp-compat
+	--disable-sftp
+	--disable-winscp-compat
+
+	"scp" or "sftp" can be excluded altogether at compile time
+	if you know you will not be using one or the other at all.
+
+	If you do not wish to support WinSCP 2.0 compatibility, you
+	can specify the disable option, which will exclude that
+	functionality.  This is for especially paranoid folks that
+	do not like the interactive nature of a WinSCP session.
+	By default, WinSCP 2.0 compatibility is compiled in.
+
+	--disable-restrictive-names
+
+	Turning off filename checks will disable checking of the 
+	scp arguments.  Historically, these arguments were checked for
+	shell metacharacters, but these checks are no longer
+	required.  (However, I leave to option to disable turned off
+	by default until a later release.)
+
+	Other options can be seen using "./configure --help"
+
+
+Step 3.  Build the binaries.
+
+	This is the easy part, type "make".
+	
+Step 4.  Install the components.
+
+	Type "make install".
+	
+	This will install your manpage and scponly binary.  
+
+Step 5. Edit /etc/shells
+
+	If you have not already done so, add "scponly" to your /etc/shells
+	file, including the full pathname.  If you are using a chrooted
+	scponly install, you should add "scponlyc", also including full 
+	pathname.
+	
+Step 6. Create/Edit a user intended for scponly use.  
+
+	Use your system's "adduser" command to create the user.
+
+	Set the default shell to the full pathname of your scponly
+	binary.  If you want chroot functionality, the name of the
+	shell is "scponlyc", otherwise it is "scponly".
+
+	This could look like:
+
+		adduser -d /pub -s /usr/local/bin/scponly scpdemo
+
+	or for chrooted:
+
+		adduser -d /pub -s /usr/local/sbin/scponlyc scpdemo
+
+	Where the home directory is "/pub" and the username is "scpdemo".
+
+	It is very important that the user's home directory be unwritable
+	by the user, as a writable homedir will make it possible for users
+	to subvert scponly by modifying ssh configuration files.
+
+	If users complain about being unable to write into their homedir,
+	there is a provision to specify both the chroot directory and a 
+	subdirectory of the chroot to chdir into:
+
+	/home/userchroot//writable/subdir
+
+	Everything before the // is the directory to chroot into and everything
+	after the // is the subdir to chdir into after chrooting.
+
+	Naturally, set the password for this user.
+
+ADDITIONAL STEPS FOR CHROOT-ENABLED INSTALLATIONS ONLY:
+
+Step 7. You will need to install some directories, passwd files,
+	libraries and binaries in your chroot path so that scponly has
+	something to invoke when it comes time to execute the remote
+	request.
+
+	I have added the script that performs most setup for chroot:
+	You can run it with:
+
+		make jail
+
+	Please be aware that chroot installation varies WIDELY from 
+	system to system.  check in the build_extras directory if
+	make jail has failed you.
+
+	Also see the BUILDING_JAILS.TXT document in this source package
+	for additional help.  Good luck!
+
+	
+That's it, you're done!
+
+
+Additional Installation notes:
+
+	- Some operating systems (notably redhat 9), use a shell script for
+the "groups" command.  Though "groups" is an allowable command, the 
+"#!/bin/sh" interpreter specification at the beginning of this script 
+will attempt to load /bin/sh, which is not available in the chrooted
+jail.  This is only a problem when you are also using WinSCP compatibiliy,
+because WinSCP will attempt to run "groups" upon connection initialization.
+
+You have three choices:
+ - you can either put /bin/sh in your jail, which is a security problem 
+ - you can deselect "lookup user groups" in the WinSCP configuration
+ - you can "make groups" using the provided groups.c and move the fake
+	groups program into your chroot.
+
+- There are additional notes and scripts in the "build_extras" directory
+	for specific platforms 
+	

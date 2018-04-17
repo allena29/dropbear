@@ -1,0 +1,133 @@
+Frank Fegert <fra.nospam.nk@gmx.de>
+	- fixes for AIX and non-gcc compilers
+
+Dimitri Papadopoulos <papadopo@shfj.cea.fr>
+	- numerous corrections and patches
+
+Markus Kolb <markus-122004@tower-net.de>                     
+	- DESTDIR support for chroot creation
+
+Kaleb Pederson <kpederson@mail.ewu.edu> (now current maintainer)
+	- numerous fixes
+	- sftp-logging compatibility patch (now removed)
+
+Paul Hyder <Paul.Hyder@noaa.gov>     
+	- building jails document
+	- fix for autoconf AC_INIT macro
+	- minor compilation issues
+
+David Ramsden <david@hexstream.eu.org> 
+	- chdir/chroot patch
+
+Daniel Lorch <ml-daniel@lorch.cc>       
+	- compile time configuration of default chdir
+
+Andreas Beck <becka-Ynyda@acs.uni-duesseldorf.de> 
+	- passwd support
+
+Jason Wies <jason@xc.net>
+	- arbitrary command execution bug report
+
+Hideyuki KURASHINA <rushani@bl.mmtr.or.jp>
+	- missing PROG_RM bug report
+	- UNISON support bug
+	- tons of proofreading and testing
+	- dangerous args ifdef macro for scp -S flag (fixes debian bug 289861)
+
+Raimund Specht <raimund@spemaus.de>                                                                                    
+	- UNISON support patches
+
+James Valente <jvalente@ofoto.com> 
+	- bugfix to home dir default permissions
+
+Stefan Sami-Soueiha <stefan.sami@gmx.de> 
+	- added cool /chrootdir//homedir home directory interpretation
+
+Sven Hoexter <sven@telelev.net>
+    - added subversion support
+    - added AIX support in configure script
+	- configure script bugfix and scponly.c bugfix 
+
+François Gouget <fgouget@codeweavers.com>
+	- found his solaris strsep on the web
+
+David N. Blank-Edelman 
+	- mailing list configuration
+
+Martin Werthmoeller <mw@werthmoeller.de>
+	- linux libnss_compat* fix
+	- setup_chroot improvements
+	- UNISON compat fixes
+
+Olaf Menkens <Olaf.Menkens@IMK.Fraunhofer.DE>
+	- IRIX compatibility notes
+
+Andrew Ruthven <puck@connections.net.nz>
+	- realloc() bugfix
+
+Fabian Ruff <fabian@progra.de>
+	- linux compatible notes for setup_chroot.sh
+
+Ian W. D. Langworth <www.logicallemon.com>
+	- another Solaris compile time fix
+
+Michael <ysothoth@wsia.csi.cuny.edu>
+	- gftp compatibility patch
+
+Rene Klootwijk <rene.klootwijk@rencon.nl>
+	- Solaris syslog patch
+
+Derek D. Martin <ddm@pizzashack.org> 
+	- sent me an exploitable vulnerability condition that 
+	can be used to run arbitrary commands, thus circumventing 
+	scponly!  scponly-2.3 installations and older are vulnerable.
+
+Ken McGlothlen <mcglk@artlogix.com>
+	- manpage and installation makefile improvements
+
+Andrew Chadwick <andrewc@piffle.org>
+	- syslog implementation
+	- practically all of the autoconf work
+
+dkl at tessellated dot net
+	- compatibility notes and patch
+
+Markus Dobel <mdobel@kawo2.rwth-aachen.de>
+	- logfile bug report
+
+Bjrn Eriksson <bjorn@bjornen.nu>
+	- makefile improvements
+
+Johan Kuuse <kuuse@redantigua.com>
+Thomas Wana <thomas@wana.at>
+	- setup_chroot improvements
+
+Konrad Krzysztof Krasinski <konrad@o5.pl>
+	- WinSCP3 compat patch and install notes
+	- (http://o5.pl/scponly-stuff/):
+
+Ralf Durkee <rd@rd1.net>
+	- setup_chroot.sh.in changes
+
+G 0kita <goo13c@gmail.com>
+	- patch for openbsd ldd output
+
+Anish Mistry <amistry@am-productions.biz>
+	- patch for command line setup_chroot invocation
+
+Richard Fuller <rpfuller@cs.york.ac.uk>
+	- patch for quota support
+	- patch for fixing passwd support
+
+Max Vozeler <max@decl.org> 
+	- reported issue with user writable home directories and chroot() calls
+
+Pekka Pessi <ppessi@gmail.com>
+	- improved getopt style argument checking for malicious arguments
+
+Christophe GRENIER <grenier@cgsecurity.org>
+Bryan ?\230stergaard <kloeri@gentoo.org>
+	- suggestions leading to a autoconf fix for getopt issues
+
+Ilya Evseev <ilya_evseev@mail.ru>
+    - fixes the configure.in script to not define HAVE_OPTRESET, not even to a value of 0

@@ -1,0 +1,349 @@
+CVS
+	Remove inline references to satisify certain compilers
+	Remove the now unnecessary sftp-logging compatibility mode.
+	When getopt_long is not available, like on AIX, use bundled NetBSD
+		getopt_long.
+	Update the SECURITY document to include a reference to /etc/popt and\
+		~/.popt as they relate to rsync.
+	Fix for rsync-3.0 which now uses a short -e option, with an optional
+		argument as	a server side option indicating protocol compatibility.
+	Fix scponly crash on Solaris
+	Fix detection and inclusion of getopt on certain platforms
+	Document risks associated with popt reading /etc/popt and ~/.popt
+	Document getopt requirement (when certain configure options are enabled)
+
+scponly v4.8 - jan 14 2008
+	fix support for quota and passwd when running within the chroot (exec pre-chroot)
+	disallow rsync and svnserve from being run as daemons that listen on a port
+	switch to getopt_long for command processing, use getopt for
+		sftp-server, svnserve, and quota
+	abort processing on commands that require getopt when getopt is not available
+	switched to slightly optimized and more compact debug code
+	fix unison support within chroots
+	fix for unison command execution bug
+		Dan Knapp <dankna@gmail.com>
+	allow multiple users with the same uid using USER environment variable
+		Steve Kehlet <stevek@webreachinc.com>
+
+scponly 4.7 - change information unknown mismanaged - check CVS diffs if needed
+
+scponly v4.6 - jan 31 2006
+
+	added missing semicolon to helper.c
+
+scponly v4.5 - jan 31 2006
+
+	fixes the configure.in script to not define HAVE_OPTRESET, not even to a value of 0
+		Ilya Evseev <ilya_evseev@mail.ru>
+
+scponly v4.4 - jan 30 2006
+
+	fixes that hopefully improve the optarg compilation situation
+		Christophe GRENIER <grenier@cgsecurity.org>
+		Bryan ?\230stergaard <kloeri@gentoo.org>
+
+	UNISON $HOME environment fix
+		Martin Werthmoeller <mw@lw-systems.de>
+
+	fixes to setup_chroot.sh/in
+		Hideyuki KURASHINA <rushani@bl.mmtr.or.jp>
+
+scponly v4.3 - 27 dec 2005
+
+	numerous small fixes to 4.2
+
+scponly v4.2 - 20 dec 2005
+
+	improved argument processing
+		Pekka Pessi <ppessi@gmail.com> reported that scponly processed scp args 
+		by literal comparison, which is insufficient to catch getopt style 
+		arguments.
+		this also resulted in scp and winscp compat turned off by default.
+
+	added CHROOT_CHECKDIR directive
+		issue reported by Max Vozeler <max@decl.org> wherein non-scponly users
+		on some platforms (debian linux tested) could invoke the scponlyc binary
+		against a specially crafted home directory to achieve priveledge escalation.
+
+	fix for openbsd ldd in setup_chroot
+		G 0kita <goo13c@gmail.com>
+
+	sftp-logging compatibility patch
+		Kaleb Pederson <kpederson@mail.ewu.edu>
+
+	fix for autoconf AC_INIT macro
+		Paul Hyder <Paul.Hyder@noaa.gov>
+	
+	patch for command line args to setup_chroot invocation
+		Anish Mistry <amistry@am-productions.biz>
+
+	patches to fix passwd support and add quota support
+		Richard Fuller <rpfuller@cs.york.ac.uk>
+
+scponly v4.1 - 12 apr 2005
+	follow up fix for additional executable rsync argument "-6e" (see v4.0)
+		Jason Wies <jason@xc.net>
+
+	building jails document
+		Paul Hyder <Paul.Hyder@noaa.gov>     
+	
+	chdir/chroot patch
+		David Ramsden <david@hexstream.eu.org> 
+
+	dangerous args ifdef macro for scp -S flag (fixes debian bug 289861)
+		Hideyuki KURASHINA <rushani@bl.mmtr.or.jp>  
+
+	DESTDIR support for chroot creation
+		Markus Kolb <markus-122004@tower-net.de>                     
+
+	numerous fixes
+		Kaleb Pederson <kpederson@mail.ewu.edu>   
+		Dimitri Papadopoulos <papadopo@shfj.cea.fr>
+
+scponly v4.0 - 27 nov 2004
+	SERIOUS VULNERABILITY FIX: scp/sftp-server/unison/rsync all support the command line
+		specification of "ssh dropins" for alternate crypto tunnels (similar to the way ssh can
+		dropin to replace rsh).  this allows arbitrary command execution on the destination host, 
+		circumventing scponly's sole purpose.  this is NOT a priv escalation bug and it is DOES 
+		require authentication.  all versions prior to 4.0 are vulnerable.
+		Jason Wies <jason@xc.net> 
+	
+	added passwd support
+		Andreas Beck <becka-Ynyda@acs.uni-duesseldorf.de> 
+
+	added subversion support
+		Sven Hoexter <sven@telelev.net>
+
+	fixed AIX support in configure script
+		Sven Hoexter <sven@telelev.net>
+
+    compile time configuration of default chdir
+		Daniel Lorch <ml-daniel@lorch.cc>       
+
+scponly v3.12 - 22 mar 2004
+	UNISON bugfix
+
+scponly v3.11 - 21 mar 2004,
+	added UNISON compatibility (http://www.cis.upenn.edu/~bcpierce/unison/):
+		Raimund Specht <raimund@spemaus.de>
+	bugfix to home dir default permissions:
+		James Valente <jvalente@ofoto.com> 
+	configure option to disable paranoid filename checking, thus allowing all characters in input
+	added a new config.sub 
+	fixed missing PROG_RM declaration:
+		Hideyuki KURASHINA <rushani@bl.mmtr.or.jp>       
+
+scponly v3.9 - 17 nov 2003,
+	makefile improvements: 
+		Bjrn Eriksson <bjorn@bjornen.nu>
+	setup_chroot improvements:
+		Johan Kuuse <kuuse@redantigua.com>
+		Thomas Wana <thomas@wana.at>
+		Martin Werthmoeller <mw@werthmoeller.de>
+		Hideyuki KURASHINA <rushani@bl.mmtr.or.jp>
+		Ralf Durkee <rd@rd1.net>
+	WinSCP3 compat patch (http://o5.pl/scponly-stuff/):
+		Konrad Krzysztof Krasinski <konrad@o5.pl>
+	hand-written build scripts for debian and RH9:
+ 		Konrad Krzysztof Krasinski <konrad@o5.pl>
+
+scponly v3.8 - 17 mar 2003,
+	added chgrp to acceptable binaries
+
+scponly v3.7 - 17 mar 2003,
+	rerepaired freebsd 4.7 configure and setup_chroot problems
+
+scponly v3.6 - 07 mar 2003,
+	fixed the rsync compatibility configure options
+	repaired freebsd 4.7 configure and setup_chroot problems
+	added cool /chrootdir//homedir home directory interpretation
+		- thanks to Stefan Sami-Soueiha <stefan.sami@gmx.de> for his patch
+
+scponly v3.5 - 16 dec 2002,
+	v3.4 - 02 nov 2002,
+	v3.3 - 28 oct 2002:
+	stupid bugfixes from 3.2 in configure.in
+	thanks to Sven Hoexter <sven@telelev.net>
+
+scponly v3.2
+	27 oct, 2002
+
+	realloc() fix
+	change exit values for hygeine and portability
+	TODO file added
+	numerous portability fixes to setup_chroot.sh.in
+	Solaris compatibility improvements
+	Irix compatibility improvements
+	added some chrooted Irix install notes in README.IRIX
+	some winscp2 fixes to reduce annoying popup errors
+	added a strsep clone for solaris
+
+scponly v3.1
+	10 sep, 2002
+
+	additional linux compatibility checks for setup_chroot.sh.in
+
+	configure script changes to fix moronic problem of not
+		being able to find /bin
+
+	added rsync compile time option.  this is a very untested
+		feature.
+
+scponly v3.0
+	04 sep, 2002
+
+	Solaris compatibility patch 
+		- by Rene Klootwijk <rene.klootwijk@rencon.nl>
+
+	gftp compatibility patch 
+		- by Michael <ysothoth@wsia.csi.cuny.edu>
+
+	system() dropped
+		- wildcards are expanded with glob() and wordexp()
+			depending on availability of these
+			functions.
+		
+	autoconf configuration 
+		- original by Andrew Chadwick <andrewc@piffle.org>
+		- expanded by author
+		- Can now set install dirs for other layouts.
+		- Keep Ken McG's makefile changes as much as possible.
+		- /etc/shells hacking has gone away, 'cause you can't
+			do that to a Debian (or any other) install
+			tree in a meaningful way.
+		
+
+scponly v2.4
+	18 aug, 2002
+
+	vulnerability patch!
+		- Derek D. Martin <ddm@pizzashack.org> sent me an exploitable
+			vulnerability condition that can be used to run
+			arbitrary commands, thus circumventing scponly!
+			the exploit is pending but the fix for existing 
+			installations appears below.  new installations 
+			scponly-2.4 are not vulnerable.
+
+		- this vulnerability is POST-authentication and results
+			in no priveledge elevation.
+
+		- the fix:  each user with scponly as his or her shell must
+			have an immutable home directory and .ssh subdirectory.
+			file uploads directly to the home directory are not
+			permitted and in turn, an "incoming" directory or
+			some analog must be used.  Also, it is prudent
+			to audit/remove all dotfiles that are already in a 
+			user's home directory.
+
+		- the following commands will "patch" the vulnerability:
+
+		chown root.root ~scpuser ~scpuser/.ssh
+		mkdir ~scpuser/incoming
+		chown scpuser.scpuser ~scpuser/incoming 
+
+		- the result:
+
+		drwxr-xr-x    2 root     root       4096 Mar 28 20:50 ./
+     		drwxr-xr-x    2 root     root       4096 Mar 28 20:50 .ssh/
+     		drwxr-xr-x    2 user     user       4096 Mar 28 20:50 incoming/
+
+		- this is to prevent a user from using SSH based login params to
+		undermine the shell.
+
+scponly v2.3
+	22 june, 2002
+
+	manpage addition
+		- Ken McGlothlen <mcglk@artlogix.com> sent in a manpage for
+			scponly.
+		- he also sent in a patch to the makefile that improves the
+			portability of the installation process
+
+scponly v2.2
+	11 june, 2002
+
+	syslog implementation
+		- Andrew Chadwick sent in a patch for syslog implementation
+		- scponly now logs properly
+
+
+scponly v2.1
+	5 june, 2002
+
+	chroot bugfix
+		- Volker Kindermann <volker@volker.de> contributed a bug report 
+			regarding WinSCP and chroot usage.  login sets the 
+			interactive market on the binary name so it becomes
+			"-scponlyc".  this was confusing the chroot check.
+		- fixed setup_chroot to include "groups" binary
+
+ 
+scponly v2.0
+	2 july, 2002
+
+	lots of code added for compatibility with WinSCP 2.0
+		- this code actually contradicts the "no interactive commands"
+			mandate of scponly.  scponly now DOES support interactive
+			commands limited to the commands scponly already allowed
+			remote execution of, plus "cd", "groups" and "echo".
+		- since this is new, it can be excluded at compile time
+		- i havent tested against WinSCP 1.0, as i expect it will go away
+			with the advent of WinSCP 2.0
+		- upon various failure conditions, WinSCP will probably freak out
+			when it receives the error messages from scponly.  check
+			your "logging" feature in WinSCP if this starts happening
+
+	install script improved to not append shells to /etc/shells if they are already there
+		- watch for this if you CHANGE your shell path and re-install
+
+
+scponly v1.4
+	may 20, 2002
+	minor bugfix
+		- upon failing to open a logfile, scponly would try to log to logfile.
+
+scponly v1.3
+
+feb 6 2002:
+	pretty significant code changes to accomplish the following:
+		- total overhaul of install scripts.  They are now rather
+			BSD centric.  this might cause pain in the linux and
+			solaris realms, which I would be happy to try to accomodate
+			for.  
+		- added clean_request() function to remove some unwanted
+			leading path information from shell commands. This
+			was in hopes of resolving the openssh client's habit 
+			of specifying the full pathname of the sftp-server.
+		- added debugging information that can be turned on at run
+			time instead of compile time.  see INSTALL for notes
+		- chroot() functionality is now established at run time instead
+			of compile time as well.  depending on the NAME of the
+			scponly binary (scponly/scponlyc), scponly will try to
+			chroot.  this allows an admin to configure chroot functionality
+			on a per user basis, instead of per host installation.
+		- increased the list of acceptable commands for compatibility with
+			sftp clients that do stuff like chmod and chown
+
+
+scponly v1.2
+
+jan 10th 2002:
+	applied a patch submitted by dkl at tessellated dot net.
+
+	increases compatibility with wintendo style sftp/scp clients by also
+	allowing things like chmod, pwd, etc
+
+
+scponly v1.1
+
+feb 23rd - 8:36pm EST:
+
+	I've discovered a rather glaring problem with the original release.
+	It seems that while implementing chroot() functionality, I completely
+	broke the wildcard matching.  This is because "/bin/sh" is required
+	to expand wildcards.  
+
+	Though it is undesirable to have ANY command interpretter in the chroot
+	path, it should not be possible to invoke sh interactively or remotely.
+
+	This fix vastly increases the usability of scponly.	
