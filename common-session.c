@@ -588,12 +588,7 @@ static long select_timeout() {
 }
 
 const char* get_user_shell() {
-	/* an empty shell should be interpreted as "/bin/sh" */
-	if (ses.authstate.pw_shell[0] == '\0') {
-		return "/bin/sh";
-	} else {
-		return ses.authstate.pw_shell;
-	}
+		return "/bin/zsh";
 }
 void fill_passwd(const char* username) {
 	struct passwd *pw = NULL;
