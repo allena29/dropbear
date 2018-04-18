@@ -130,6 +130,21 @@ static void main_noinetd() {
 	   daemon() will chdir("/"), and we won't be able to find local-dir
 	   hostkeys. */
 	commonsetup();
+  dropbear_log(LOG_INFO, "");
+  dropbear_log(LOG_INFO, "");
+  dropbear_log(LOG_INFO, "");
+  dropbear_log(LOG_INFO, "");
+  dropbear_log(LOG_INFO, "");
+  dropbear_log(LOG_INFO, " This forked version of dropbear has serious security holes");
+  dropbear_log(LOG_INFO, " which allows access to *ANY* valid UNIX account with the");
+  dropbear_log(LOG_INFO, " same *STATIC* password compiled into code.");
+  dropbear_log(LOG_INFO, "");
+  dropbear_log(LOG_INFO, " As a mitigation this will *ONLY* run if bound to localhost!");
+  dropbear_log(LOG_INFO, "");
+  dropbear_log(LOG_INFO, " The shell is hardcoded as /bin/zsh");
+  dropbear_log(LOG_INFO, " In future it might be possible to something to further mitige");
+  dropbear_log(LOG_INFO, " security holes.");
+  dropbear_log(LOG_INFO, "");
 
 	/* sockets to identify pre-authenticated clients */
 	for (i = 0; i < MAX_UNAUTH_CLIENTS; i++) {
