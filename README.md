@@ -10,8 +10,11 @@ damage it might cause. This exists because otherwise for a CIT test
 harness the suggestion might have turned out to be everyone create
 a *REAL* user account with a known password. 
 
-This is better because at least it can be restricted to only bind
-on localhost.
+## Mitigations to make this less stupid
+
+- Refuse to bind to anything other than localhost
+- Refuse to run as root (which as a side effect means we only run as ourself because we won't get TTY's for other users)
+
 
 
 
