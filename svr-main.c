@@ -418,8 +418,18 @@ static size_t listensockets(int *socks, size_t sockcount, int *maxfd) {
 
 	TRACE(("listensockets: %d to try", svr_opts.portcount))
 
+  char* localhost_str = "127.0.0.1";
 	for (i = 0; i < svr_opts.portcount; i++) {
+		dropbear_log(LOG_INFO, "wanting to listening on s");
+    if(strcmp(localhost_str, svr_opts.addresses[i])==0){
+      dropbear_log(LOG_INFO, "Binding to localhost - given there are big holes in this that is at least some sanity");    
+    }else{
+      dropbear_log(LOG_INFO, "NOT BINDING TO LOCALHOST IS CRAZY - this takes a static compiled password and lets you in");
+      exit(-1);
+    }
+  }
 
+	for (i = 0; i < svr_opts.portcount; i++) {
 		TRACE(("listening on '%s:%s'", svr_opts.addresses[i], svr_opts.ports[i]))
 
 		nsock = dropbear_listen(svr_opts.addresses[i], svr_opts.ports[i], &socks[sockpos], 
